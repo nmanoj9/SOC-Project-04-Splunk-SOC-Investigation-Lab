@@ -75,8 +75,6 @@ The investigation was performed using locally generated Windows Security Logs an
 
 ---
 
----
-
 # Lab Architecture
 
 ```text
@@ -324,33 +322,29 @@ These queries demonstrate how Splunk Search Processing Language (SPL) was used t
 ---
 
 # Project Structure
-
-```text
-SOC-Project-04-Splunk-SOC-Investigation-Lab
+```
+SOC-Project-4-Splunk-SOC-Investigation-Lab
 │
 ├── Documentation
-│   ├── 01_Authentication_Investigation.txt
-│   ├── 02_Brute_Force_Detection.txt
-│   ├── 03_Sysmon_Process_Creation.txt
-│   ├── 04_Sysmon_Network_Investigation.txt
-│   ├── 05_Process_Termination_Analysis.txt
-│   ├── 06_Event_Correlation.txt
-│   └── 07_MITRE_ATT&CK_Mapping.txt
+│   ├── 01_Windows_Security_Log_Analysis.md
+│   ├── 02_Brute_Force_Detection.md
+│   ├── 03_Sysmon_Investigation.md
+│   ├── 04_Event_Correlation.md
+│   └── 05_MITRE_ATTACK_Mapping.md
 │
 ├── Queries
-│   ├── 01_Authentication_Queries.txt
-│   ├── 02_Brute_Force_Queries.txt
-│   └── 03_Sysmon_Queries.txt
+│   ├── 01_Authentication_Queries.spl
+│   ├── 02_Brute_Force_Queries.spl
+│   └── 03_Sysmon_Queries.spl
 │
 ├── Screenshots
 │   ├── Authentication
-│   ├── Brute_Force
+│   ├── Bruteforce
 │   ├── Correlation
 │   └── Sysmon
 │
 └── README.md
 ```
-
 ---
 
 # Screenshots
