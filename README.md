@@ -359,7 +359,7 @@ The repository contains supporting screenshots demonstrating:
 - Sysmon Event ID 5 (Process Termination)
 - Brute Force Detection
 - Authentication Timeline
-- Event Correlation
+- Authentication Event Timeline
 
 ---
 
