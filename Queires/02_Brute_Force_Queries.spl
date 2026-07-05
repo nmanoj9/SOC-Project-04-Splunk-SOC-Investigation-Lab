@@ -1,0 +1,117 @@
+BRUTE FORCE DETECTION QUERIES
+
+==================================================
+
+Query 1: Retrieve Failed Logon Events
+
+Purpose:
+Retrieve all failed authentication events used for brute-force analysis.
+
+Full Query:
+index=main EventCode=4625
+
+Explanation:
+- Retrieves all Windows failed logon events.
+
+==================================================
+
+Query 2: Failed Authentication Timeline
+
+Purpose:
+Display failed authentication attempts in chronological order.
+
+Full Query:
+index=main EventCode=4625
+| table _time Account_Name Source_Network_Address Logon_Type Failure_Reason Status Sub_Status
+| sort _time
+
+Explanation:
+- table displays the important investigation fields.
+- sort _time reconstructs the attack timeline.
+
+==================================================
+
+Query 3: Count Failed Logon Attempts
+
+Purpose:
+Count failed logon attempts against each account.
+
+Full Query:
+index=main EventCode=4625
+| eval Target_Account=mvindex(Account_Name,0)
+| stats count as Failed_Attempts by Target_Account Source_Network_Address Logon_Type
+
+Explanation:
+- eval extracts the account name.
+- stats counts failed attempts for each account and source IP.
+
+==================================================
+
+Query 4: Detect Repeated Failed Logons Within Five Minutes
+
+Purpose:
+Identify repeated failed authentication attempts that may indicate brute-force activity.
+
+Full Query:
+index=main EventCode=4625 earliest="06/22/2026:10:56:00" latest="06/22/2026:10:57:00"
+| eval Target_Account=mvindex(Account_Name,0)
+| bin _time span=5m
+| stats count as Failed_Attempts earliest(_time) as First_Attempt latest(_time) as Last_Attempt by Target_Account Source_Network_Address Logon_Type
+| where Failed_Attempts>=4
+| convert ctime(First_Attempt) ctime(Last_Attempt)
+
+Explanation:
+- earliest and latest limit the investigation period.
+- eval extracts the account name.
+- bin groups events into five-minute windows.
+- stats counts failed logons.
+- where filters repeated authentication failures.
+- convert formats timestamps into readable time.
+
+==================================================
+
+Query 5: Failure Reason Analysis
+
+Purpose:
+Determine why authentication attempts failed.
+
+Full Query:
+index=main EventCode=4625 earliest="06/22/2026:10:56:00" latest="06/22/2026:10:57:00"
+| stats count by Failure_Reason Status Sub_Status
+
+Explanation:
+- Groups failed logons by failure reason.
+- Displays Windows status and sub-status codes.
+
+==================================================
+
+Query 6: Detailed Failed Authentication Events
+
+Purpose:
+Review all failed authentication attempts included in the investigation.
+
+Full Query:
+index=main EventCode=4625 earliest="06/22/2026:10:56:00" latest="06/22/2026:10:57:00"
+| eval Target_Account=mvindex(Account_Name,0)
+| table _time Target_Account Source_Network_Address Logon_Type
+| sort _time
+
+Explanation:
+- Displays the complete failed authentication timeline.
+- Used to verify each failed logon event individually.
+
+==================================================
+
+Query 7: Brute Force Investigation Summary
+
+Purpose:
+Summarize failed authentication activity during the investigation.
+
+Full Query:
+index=main EventCode=4625 earliest="06/22/2026:10:56:00" latest="06/22/2026:10:57:00"
+| stats count as Total_Failed_Logons values(Source_Network_Address) as Source_IP values(Logon_Type) as Logon_Type
+
+Explanation:
+- Counts total failed logons.
+- Lists the observed source IP address.
+- Lists the observed logon type.

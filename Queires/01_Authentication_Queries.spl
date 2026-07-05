@@ -1,0 +1,121 @@
+AUTHENTICATION INVESTIGATION QUERIES
+
+==================================================
+
+Query 1: Retrieve Failed Logon Events (Event ID 4625)
+
+Purpose:
+Retrieve all failed authentication events.
+
+Full Query:
+index=main EventCode=4625
+
+Explanation:
+- index=main searches the main Splunk index.
+- EventCode=4625 filters Windows failed logon events.
+
+==================================================
+
+Query 2: Failed Logon Analysis
+
+Purpose:
+Display important fields from failed authentication events.
+
+Full Query:
+index=main EventCode=4625
+| table _time Account_Name Failure_Reason Status Sub_Status Logon_Type Source_Network_Address Workstation_Name Process_Name
+| sort _time
+
+Explanation:
+- table displays only the required investigation fields.
+- sort _time arranges events chronologically.
+
+==================================================
+
+Query 3: Retrieve Successful Logon Events (Event ID 4624)
+
+Purpose:
+Retrieve all successful authentication events.
+
+Full Query:
+index=main EventCode=4624
+
+Explanation:
+- Retrieves Windows successful logon events.
+
+==================================================
+
+Query 4: Successful Logon Analysis
+
+Purpose:
+Review authentication details after successful logon.
+
+Full Query:
+index=main EventCode=4624
+| table _time Account_Name Logon_Type Process_Name Source_Network_Address Workstation_Name Authentication_Package
+| sort _time
+
+Explanation:
+- Displays important authentication fields.
+- Helps verify how the user successfully authenticated.
+
+==================================================
+
+Query 5: Retrieve Special Privileges Assigned (Event ID 4672)
+
+Purpose:
+Identify privileged logon events.
+
+Full Query:
+index=main EventCode=4672
+
+Explanation:
+- Retrieves Event ID 4672.
+- Used to verify administrative privileges assigned after logon.
+
+==================================================
+
+Query 6: Authentication Timeline
+
+Purpose:
+Correlate failed logon, successful logon, and privileged logon events.
+
+Full Query:
+index=main earliest="06/22/2026:10:56:00" latest="06/22/2026:11:00:00" (EventCode=4625 OR EventCode=4624 OR EventCode=4672)
+| table _time EventCode Account_Name Logon_Type Process_Name
+| sort _time
+
+Explanation:
+- earliest and latest restrict the investigation time.
+- OR retrieves all authentication-related events.
+- table displays the important fields.
+- sort _time reconstructs the authentication timeline.
+
+==================================================
+
+Query 7: Logon Type Summary
+
+Purpose:
+Identify the different logon types observed during the investigation.
+
+Full Query:
+index=main (EventCode=4624 OR EventCode=4625)
+| stats count by Logon_Type
+
+Explanation:
+- stats count counts events.
+- by Logon_Type groups events based on authentication type.
+
+==================================================
+
+Query 8: Authentication Event Summary
+
+Purpose:
+Summarize the number of authentication events collected.
+
+Full Query:
+index=main (EventCode=4624 OR EventCode=4625 OR EventCode=4672)
+| stats count by EventCode
+
+Explanation:
+- Provides a quick summary of authentication-related event counts.
