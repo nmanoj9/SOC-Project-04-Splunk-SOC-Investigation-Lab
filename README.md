@@ -358,7 +358,6 @@ The repository contains supporting screenshots demonstrating:
 - Sysmon Event ID 3 (Network Connection)
 - Sysmon Event ID 5 (Process Termination)
 - Brute Force Detection
-- Authentication Timeline
 - Authentication Event Timeline
 
 ---
