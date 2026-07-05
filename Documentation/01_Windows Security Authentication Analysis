@@ -34,7 +34,8 @@ The collected event contained:
 - Sub Status
 - Timestamp
 
-The analysis confirmed four consecutive failed interactive logon attempts originating from the same source address (127.0.0.1).
+The analysis identified multiple failed interactive logon attempts originating from the same source address (127.0.0.1). The events occurred within a short time period and were analyzed to determine whether the activity matched a brute-force authentication pattern.
+
 
 ---
 
