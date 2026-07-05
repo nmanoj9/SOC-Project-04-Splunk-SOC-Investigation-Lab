@@ -57,6 +57,11 @@ The investigation includes failed logon analysis, successful authentication vali
 | Log Forwarder | Splunk Universal Forwarder |
 | Investigation Platform | Splunk Search & Reporting |
 
+## Dataset
+
+The investigation was performed using locally generated Windows Security Logs and Sysmon telemetry collected from a Windows 11 virtual machine. Logs were forwarded to Splunk Enterprise using the Splunk Universal Forwarder. Authentication events and endpoint telemetry were intentionally generated in a controlled lab environment for analysis.
+
+
 ---
 
 ## Tools Used
