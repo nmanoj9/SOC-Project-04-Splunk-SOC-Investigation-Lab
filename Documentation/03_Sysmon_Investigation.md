@@ -78,7 +78,7 @@ The event contained:
 ## SPL Query Explanation
 ```
 -rex      → Extract EventID
--search   → Filter Event ID 1
+-search   → Filter Event ID 3
 -stats    → Summarize results
 -table    → Display important fields
 ```
