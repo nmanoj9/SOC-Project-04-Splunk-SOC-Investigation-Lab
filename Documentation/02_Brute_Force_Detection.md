@@ -54,7 +54,7 @@ The detection query identified multiple failed authentication attempts originati
 - Source IP Address: 127.0.0.1
 - Logon Type: 2 (Interactive)
 - Detection Window: 5 Minutes
-- Activity Successfully Detected
+- Brute Force Detection Rule Triggered Successfully
 
 ---
 
