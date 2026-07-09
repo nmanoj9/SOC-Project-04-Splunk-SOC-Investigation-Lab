@@ -63,7 +63,7 @@ Following successful authentication, Sysmon telemetry was analyzed to observe en
 The investigation confirmed:
 
 - Notepad.exe was launched by explorer.exe.
-- Google Chrome generated normal UDP network communication over port 5353.
+- Google Chrome generated normal mDNS (UDP/5353) network communication.
 - Notepad.exe terminated normally after execution.
 
 These events demonstrated normal user activity following authentication.
@@ -109,4 +109,4 @@ No indicators of compromise, persistence mechanisms, privilege abuse, or malicio
 
 Event correlation significantly improves investigation accuracy by combining authentication logs with endpoint telemetry.
 
-This investigation demonstrates how Windows Security Logs and Sysmon complement each other to provide complete visibility into authentication events, process execution, network activity, and system behavior during a SOC investigation.
+This investigation demonstrates the value of correlating Windows Security Logs with Sysmon telemetry to reconstruct authentication events, endpoint activity, and complete process lifecycles. Cross-source correlation significantly improves investigation accuracy and analyst confidence.
