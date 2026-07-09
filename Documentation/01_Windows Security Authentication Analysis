@@ -97,7 +97,7 @@ Observed privileges included:
 ## Analyst Findings
 
 - Privileged logon occurred immediately after authentication.
-- Assigned privileges matched expected Windows administrative behavior.
+- Assigned privileges were consistent with an administrative logon.
 - No abnormal privilege escalation indicators were identified.
 
 ---
