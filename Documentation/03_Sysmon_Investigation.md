@@ -46,7 +46,7 @@ The investigation confirmed:
 - Process Name: **Notepad.exe**
 - Parent Process: **explorer.exe**
 - Integrity Level: **Medium**
-- Process launched through normal Windows user interaction.
+- The parent-child process relationship indicated normal user-driven execution through Windows Explorer.
 - Process creation was successfully ingested into Splunk.
 
 ---
@@ -68,6 +68,20 @@ The event contained:
 - Destination Port
 - Protocol
 
+## SPL Query
+```
+-index=main sourcetype=sysmon
+-| rex "<EventID>(?<EventCode>\d+)</EventID>"
+-| search EventCode=3
+```
+
+## SPL Query Explanation
+```
+-rex      → Extract EventID
+-search   → Filter Event ID 1
+-stats    → Summarize results
+-table    → Display important fields
+```
 ---
 
 ## Analyst Findings
@@ -110,22 +124,20 @@ The investigation confirmed:
 The investigation correlated multiple Sysmon events to reconstruct endpoint activity.
 
 ```
-Process Created
-(Event ID 1)
-
+Event ID 1
+Process Creation
         │
-
         ▼
-
-Network Activity
-(Event ID 3)
-
+Same Process ID
+Same Process GUID
         │
-
         ▼
-
-Process Terminated
-(Event ID 5)
+Event ID 3
+Network Connection
+        │
+        ▼
+Event ID 5
+Process Termination
 ```
 
 The matching Process ID and Process GUID confirmed that the observed events belonged to the same execution lifecycle where applicable.
@@ -150,12 +162,11 @@ No malicious behavior was identified during the investigation because all activi
 
 ## Evidence Collected
 
-- Process Creation Event
-- Network Connection Event
-- Process Termination Event
+- Process Creation Details
+- Network Connection Details
+- Process Termination Search
 - Process Lifecycle Correlation
 - Analyst Investigation Notes
-
 ---
 
 ## Conclusion
