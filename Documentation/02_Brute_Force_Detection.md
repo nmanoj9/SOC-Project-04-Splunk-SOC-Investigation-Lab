@@ -31,15 +31,26 @@ index=main EventCode=4625 earliest="06/22/2026:10:56:00" latest="06/22/2026:10:5
 | convert ctime(First_Attempt) ctime(Last_Attempt)
 ```
 
+
+## SPL Query Explanation
+
+| Command | Purpose |
+|---------|---------|
+| eval | Extracts the target account from the multivalue field |
+| bin | Groups events into five-minute intervals |
+| stats | Counts failed authentication attempts |
+| where | Filters results to accounts with four or more failures |
+| convert | Converts epoch timestamps into readable time |
+
 ---
 
 ## Investigation Results
 
-The query identified repeated failed authentication attempts against a single account.
+The detection query identified multiple failed authentication attempts originating from the same source IP address against a single user account within the configured five-minute detection window.
 
 ### Observations
 
-- Failed Attempts: 4
+- Multiple Failed Attempts Detected
 - Source IP Address: 127.0.0.1
 - Logon Type: 2 (Interactive)
 - Detection Window: 5 Minutes
@@ -65,7 +76,7 @@ These values confirmed that Windows rejected the authentication requests during 
 
 ## Analyst Assessment
 
-The observed authentication activity matched the configured brute-force detection rule.
+The observed authentication pattern satisfied the configured brute-force detection rule and generated the expected detection output.
 
 Although the activity resembled a brute-force attack, it was intentionally generated in a controlled lab environment for security analysis and SPL query validation.
 
@@ -85,6 +96,5 @@ No malicious activity was present.
 
 ## Conclusion
 
-The custom SPL detection rule successfully identified repeated failed authentication attempts within the configured five-minute window.
-
+The custom SPL detection rule successfully identified repeated failed authentication attempts by aggregating Windows Security Event ID 4625 records over a five-minute detection window.
 This investigation demonstrates how Splunk Enterprise can be used to detect brute-force authentication activity using Windows Security Logs and basic statistical aggregation.
