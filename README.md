@@ -373,5 +373,4 @@ The repository contains supporting screenshots demonstrating:
 
 ## Conclusion
 
-This project demonstrates a complete SOC investigation workflow using Splunk Enterprise by combining Windows Security Logs and Sysmon telemetry. The investigation covered authentication analysis, brute-force detection, endpoint activity monitoring, event correlation, and MITRE ATT&CK mapping. It strengthened practical skills in log analysis, SPL query development, investigation documentation, and structured incident analysis while reinforcing the importance of correlating multiple data sources during security investigations.
-
+This project demonstrates practical experience in log analysis, authentication investigations, endpoint telemetry analysis, event correlation, detection engineering using SPL, and structured SOC documentation.
