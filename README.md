@@ -19,7 +19,7 @@ The investigation includes failed logon analysis, successful authentication vali
 - [Investigation Workflow](#investigation-workflow)
 - [Windows Security Log Analysis](#windows-security-log-analysis)
 - [Sysmon Investigation](#sysmon-investigation)
-- [Event Correlation](#event-correlation)
+- [Event Correlation Investigation](#event-correlation-investigation)
 - [Detection Logic](#detection-logic)
 - [MITRE ATT&CK Mapping](#mitre-attck-mapping)
 - [Splunk Search Queries](#splunk-search-queries)
@@ -193,11 +193,11 @@ Repeated failed authentication attempts were analyzed to determine whether the o
 
 ## Detection Logic
 
-The detection rule monitored Windows Security Event ID 4625 and generated an alert when four or more failed logon attempts were recorded for the same account within a five-minute period.
+The detection logic monitored Windows Security Event ID 4625 and identified potential brute-force activity when four or more failed logon attempts were recorded for the same account within a five-minute period.
 
 ## Investigation Summary
 
-The investigation identified four consecutive failed interactive logon attempts originating from the same source IP address. The activity matched the configured detection rule and demonstrated how repeated authentication failures can be identified using Splunk SPL.
+The investigation identified multiple failed interactive logon attempts against the same user account within a short time period. The observed activity matched the configured detection logic and demonstrated how repeated authentication failures can be identified using Splunk SPL.
 
 ## Evidence Collected
 
@@ -247,9 +247,11 @@ Sysmon Event ID 5 was investigated to verify process termination and correlate i
 
 ---
 
-# Event Correlation
+# Event Correlation Investigation
 
 Individual events provide useful information, but correlating multiple log sources gives a more complete understanding of system activity. During this investigation, Windows Security Logs and Sysmon events were correlated to reconstruct the sequence of actions observed in the lab.
+
+The following timeline illustrates the sequence of correlated Windows Security and Sysmon events observed during the investigation.
 
 ## Correlation Timeline
 
@@ -264,7 +266,7 @@ Individual events provide useful information, but correlating multiple log sourc
 
 ## Investigation Outcome
 
-By correlating authentication events with Sysmon telemetry, the complete sequence of activity was reconstructed. The investigation confirmed a controlled lab scenario consisting of repeated failed logon attempts, successful authentication, administrative privilege assignment, normal process execution, network communication, and process termination. No indicators of malicious activity were identified.
+The correlated Windows Security and Sysmon events reconstructed the complete activity timeline observed during the lab. The investigation confirmed repeated failed logon attempts followed by successful authentication, expected administrative privilege assignment, legitimate process execution, outbound network communication, and normal process termination. No indicators of malicious activity were identified.
 
 
 ---
@@ -278,7 +280,7 @@ The observed activities were mapped to the MITRE ATT&CK framework where appropri
 | T1110 | Brute Force | Multiple failed authentication attempts (Event ID 4625) |
 | T1078 | Valid Accounts | Successful authentication following repeated failed logon attempts (Event ID 4624) |
 
-**Note:** Event ID 4672 and the observed Sysmon events were not mapped because they represented expected operating system behavior during the lab and did not indicate malicious activity.
+**Note:** Note: Event ID 4672 and the observed Sysmon events were analyzed during the investigation but were not mapped to additional ATT&CK techniques because the observed activity was consistent with expected Windows operating system behavior in the lab environment.
 
 ---
 
@@ -308,7 +310,7 @@ These queries demonstrate how Splunk Search Processing Language (SPL) was used t
 
 # Skills Demonstrated
 
-- Security Event Log Analysis
+- Log Analysis
 - Splunk Search Processing Language (SPL)
 - Authentication Investigation
 - Brute Force Detection
@@ -373,4 +375,4 @@ The repository contains supporting screenshots demonstrating:
 
 ## Conclusion
 
-This project demonstrates practical experience in log analysis, authentication investigations, endpoint telemetry analysis, event correlation, detection engineering using SPL, and structured SOC documentation.
+This project demonstrates practical experience in validating log ingestion, investigating Windows Security and Sysmon events, detecting repeated failed authentication attempts, correlating authentication and endpoint telemetry, and documenting findings using Splunk. The investigation identified no confirmed malicious activity and demonstrated a structured SOC investigation workflow in a controlled lab environment.
